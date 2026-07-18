@@ -1,0 +1,159 @@
+.container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  margin-bottom: 2rem;
+}
+
+.header h1 {
+  font-size: 2rem;
+  color: #1a1a1a;
+  margin-bottom: 0.5rem;
+}
+
+.header p {
+  color: #666;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 4rem;
+  background: white;
+  border-radius: 12px;
+  border: 1px dashed #e2e8f0;
+  color: #64748b;
+}
+
+.ordersList {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.orderCard {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.orderHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.orderHeader h3 {
+  font-size: 1.125rem;
+  color: #0f172a;
+  margin-bottom: 0.25rem;
+}
+
+.date {
+  font-size: 0.875rem;
+  color: #64748b;
+}
+
+.statusBadge {
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.statusBadge[data-status="PAYMENT_CONFIRMED"] {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.statusBadge[data-status="SHIPPED"] {
+  background: #e0e7ff;
+  color: #3730a3;
+}
+
+.statusBadge[data-status="DELIVERED"] {
+  background: #dcfce3;
+  color: #166534;
+}
+
+.orderDetails {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.infoGroup strong {
+  display: block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #64748b;
+  margin-bottom: 0.5rem;
+}
+
+.infoGroup p {
+  color: #334155;
+  font-size: 0.95rem;
+}
+
+.address {
+  line-height: 1.5;
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  padding-top: 1rem;
+  border-top: 1px solid #f1f5f9;
+}
+
+.actions button {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.shipBtn {
+  background: #4f46e5;
+  color: white;
+  border: none;
+}
+
+.shipBtn:hover {
+  background: #4338ca;
+}
+
+.deliverBtn {
+  background: #16a34a;
+  color: white;
+  border: none;
+}
+
+.deliverBtn:hover {
+  background: #15803d;
+}
+
+.viewBtn {
+  background: white;
+  color: #475569;
+  border: 1px solid #cbd5e1;
+}
+
+.viewBtn:hover {
+  background: #f8fafc;
+  color: #0f172a;
+}

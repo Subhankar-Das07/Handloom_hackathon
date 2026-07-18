@@ -1,0 +1,263 @@
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 0 4rem 0;
+}
+
+.banner {
+  width: 100%;
+  height: 200px;
+  background: url('https://images.unsplash.com/photo-1605814516801-b54170364cd5?q=80&w=2000&auto=format&fit=crop');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.bannerOverlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, var(--bg-color) 100%);
+}
+
+.profileHeader {
+  display: flex;
+  gap: 2rem;
+  padding: 0 2rem;
+  margin-top: -60px;
+  position: relative;
+  z-index: 10;
+  margin-bottom: 3rem;
+}
+
+.avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary-color), #8b5cf6);
+  border: 4px solid var(--bg-color);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.info {
+  flex: 1;
+  padding-top: 70px;
+}
+
+.name {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.verifiedBadge {
+  background: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+  font-size: 0.8rem;
+  padding: 4px 10px;
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.location {
+  color: #888;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 1rem;
+}
+
+.bio {
+  font-size: 1.1rem;
+  line-height: 1.5;
+  color: var(--text-color);
+  max-width: 600px;
+  margin-bottom: 1.5rem;
+}
+
+.stats {
+  display: flex;
+  gap: 2rem;
+}
+
+.stat {
+  font-size: 1.1rem;
+  color: #888;
+}
+
+.stat strong {
+  color: var(--text-color);
+  font-size: 1.2rem;
+}
+
+.actions {
+  padding-top: 70px;
+}
+
+.followBtn {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s;
+}
+
+.followBtn:hover {
+  background: #2563eb;
+}
+
+.followBtn.following {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+}
+
+.followBtn.following:hover {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
+.tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border-color);
+  padding: 0 2rem;
+  margin-bottom: 2rem;
+}
+
+.tab {
+  padding: 1rem 2rem;
+  background: transparent;
+  border: none;
+  color: #888;
+  font-size: 1.1rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s;
+}
+
+.tab.activeTab {
+  color: var(--primary-color);
+  border-bottom-color: var(--primary-color);
+}
+
+.content {
+  padding: 0 2rem;
+}
+
+.productGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.productCard {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.productImgPlaceholder {
+  height: 200px;
+  background: #222;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+}
+
+.productInfo {
+  padding: 1.5rem;
+}
+
+.productInfo h4 {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.productInfo p {
+  color: #10b981;
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.buyBtn {
+  width: 100%;
+  padding: 0.75rem;
+  background: rgba(59,130,246,0.1);
+  color: var(--primary-color);
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.reelsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.reelCard {
+  position: relative;
+  height: 350px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #000;
+}
+
+.reelMedia {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.reelOverlay {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 1rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .profileHeader {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+  }
+  .info {
+    padding-top: 1rem;
+  }
+  .stats {
+    justify-content: center;
+  }
+  .actions {
+    padding-top: 1rem;
+  }
+}

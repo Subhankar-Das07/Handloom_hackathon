@@ -1,0 +1,168 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2.5rem;
+}
+
+.secureBadge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #4ade80;
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+.form {
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.inputGroup label {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 1rem;
+  transition: all var(--transition-fast);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--primary-400);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.divider {
+  height: 1px;
+  background: var(--border-color);
+  margin: 1rem 0;
+}
+
+.paymentMock {
+  background: rgba(109, 66, 239, 0.1);
+  border: 1px solid rgba(109, 66, 239, 0.3);
+  padding: 1.5rem;
+  border-radius: var(--radius-md);
+  color: var(--primary-300);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+.summaryCard {
+  padding: 2rem;
+  position: sticky;
+  top: 2rem;
+}
+
+.itemList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.miniItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.miniItemInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.miniItemTitle {
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+.miniItemQty {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.miniItemPrice {
+  font-weight: 600;
+  font-size: 0.9375rem;
+}
+
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+}
+
+.totalRow {
+  color: var(--text-main);
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0;
+}
+
+.successContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 70vh;
+  text-align: center;
+  gap: 1.5rem;
+}
+
+.successIcon {
+  color: #4ade80;
+  margin-bottom: 1rem;
+}
+
+.redirectText {
+  color: var(--text-muted);
+  margin-top: 2rem;
+  font-size: 0.875rem;
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

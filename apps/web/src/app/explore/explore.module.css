@@ -1,0 +1,200 @@
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+  color: var(--text-color);
+  text-align: center;
+}
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.feedWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.postCard {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.postHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary-color), #8b5cf6);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.producerInfo {
+  flex: 1;
+}
+
+.producerName {
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.verifiedBadge {
+  background: #10b981;
+  color: white;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.6rem;
+}
+
+.postTime {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.mediaContainer {
+  position: relative;
+  width: 100%;
+  background: #000;
+  max-height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.media {
+  width: 100%;
+  max-height: 600px;
+  object-fit: contain;
+}
+
+.videoWrapper {
+  position: relative;
+  width: 100%;
+  cursor: pointer;
+}
+
+.playIcon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+}
+
+.videoWrapper:hover .playIcon {
+  opacity: 0.5;
+}
+
+.caption {
+  padding: 1.5rem;
+  color: var(--text-color);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.shoppableTagContainer {
+  padding: 0 1.5rem 1rem 1.5rem;
+}
+
+.shoppableTag {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  padding: 0.75rem;
+  border-radius: 8px;
+  backdrop-filter: blur(4px);
+}
+
+.shoppableIcon {
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--primary-color);
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.shoppableInfo {
+  flex: 1;
+}
+
+.shoppableTitle {
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+}
+
+.shoppablePrice {
+  color: #10b981;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.buyBtn {
+  background: var(--primary-color);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.85rem;
+  transition: background 0.2s;
+}
+
+.buyBtn:hover {
+  background: #2563eb;
+}
+
+.interactionBar {
+  display: flex;
+  gap: 1.5rem;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.actionBtn {
+  background: transparent;
+  border: none;
+  color: var(--text-color);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  opacity: 0.8;
+  transition: opacity 0.2s, color 0.2s;
+}
+
+.actionBtn:hover {
+  opacity: 1;
+  color: var(--primary-color);
+}
