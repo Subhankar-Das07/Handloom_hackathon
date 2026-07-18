@@ -88,7 +88,7 @@ export default function ProducerDashboard() {
       <aside className={styles.sidebar + " glass-panel"}>
         <div className={styles.sidebarHeader}>
           <div className={styles.logo}>
-            <span className={styles.logoIcon}>✦</span> Tanthavi
+            <span className={styles.logoIcon}>✦</span> Sutra
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginTop: '1rem' }}>
             <span className={styles.badge}>Weaver Portal</span>

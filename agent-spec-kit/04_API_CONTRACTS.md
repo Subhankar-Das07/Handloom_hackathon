@@ -1,7 +1,7 @@
 # 04 — API Contracts
-# Tanthavi Handloom Marketplace — Complete Endpoint Reference
+# Sutra Handloom Marketplace — Complete Endpoint Reference
 
-> **Version:** 1.0.0 | **Base URL:** `https://api.tanthavi.com`
+> **Version:** 1.0.0 | **Base URL:** `https://api.sutra.com`
 > All requests use `Content-Type: application/json` unless noted (multipart for file uploads).
 > All timestamps are ISO 8601 UTC. All monetary amounts are in INR (Indian Rupees).
 

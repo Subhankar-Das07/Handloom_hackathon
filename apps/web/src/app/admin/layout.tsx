@@ -24,7 +24,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     <div className={styles.layout}>
       <aside className={styles.sidebar}>
         <div className={styles.logo}>
-          <span>✦</span> Tanthavi Admin
+          <span>✦</span> Sutra Admin
         </div>
         
         <nav className={styles.nav}>

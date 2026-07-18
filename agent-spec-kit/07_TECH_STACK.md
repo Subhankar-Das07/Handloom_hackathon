@@ -200,12 +200,12 @@ ProxySellerModule
 ### Object Storage: AWS S3 + CloudFront
 
 **Bucket Policy**:
-- `tanthavi-kyc-docs` — private; no public access; pre-signed URLs only; AES-256 server-side encryption
-- `tanthavi-product-media` — public read; served via CloudFront CDN
-- `tanthavi-post-media` — public read; served via CloudFront CDN
-- `tanthavi-hls-reels` — public read; HLS transcoded segments; served via CloudFront
-- `tanthavi-invoices` — private; pre-signed URLs; 7-year retention (tax compliance)
-- `tanthavi-exports` — private; admin-generated reports; 30-day retention
+- `sutra-kyc-docs` — private; no public access; pre-signed URLs only; AES-256 server-side encryption
+- `sutra-product-media` — public read; served via CloudFront CDN
+- `sutra-post-media` — public read; served via CloudFront CDN
+- `sutra-hls-reels` — public read; HLS transcoded segments; served via CloudFront
+- `sutra-invoices` — private; pre-signed URLs; 7-year retention (tax compliance)
+- `sutra-exports` — private; admin-generated reports; 30-day retention
 
 **CloudFront**: Global CDN with cache-control headers. Images: `max-age=31536000, immutable` (content-addressed with hash in filename). HLS segments: `max-age=86400`.
 
@@ -220,7 +220,7 @@ ProxySellerModule
 - 720p HLS (default)
 - 1080p HLS (if source resolution allows)
 
-**Flow**: Upload to S3 raw bucket → MediaConvert job triggered → HLS segments stored in `tanthavi-hls-reels` → thumbnail extracted → `posts.media_s3_keys` updated with HLS manifest URL
+**Flow**: Upload to S3 raw bucket → MediaConvert job triggered → HLS segments stored in `sutra-hls-reels` → thumbnail extracted → `posts.media_s3_keys` updated with HLS manifest URL
 
 ---
 

@@ -23,7 +23,7 @@ export const useAuthStore = create<AuthState>()(
       logout: () => set({ user: null, accessToken: null }),
     }),
     {
-      name: 'tanthavi-auth',
+      name: 'sutra-auth',
     }
   )
 );

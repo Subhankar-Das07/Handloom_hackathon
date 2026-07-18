@@ -59,7 +59,7 @@ export const useCartStore = create<CartState>()(
       }
     }),
     {
-      name: 'tanthavi-cart-storage',
+      name: 'sutra-cart-storage',
     }
   )
 );

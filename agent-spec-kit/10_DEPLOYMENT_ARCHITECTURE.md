@@ -149,7 +149,7 @@ All traffic enters through Kong. Kong handles:
 
 5. **IP Restriction** (plugin: `ip-restriction`): `/admin/*` routes restricted to office IP ranges + VPN
 
-6. **CORS** (plugin: `cors`): Origins whitelist: `https://tanthavi.in`, `https://www.tanthavi.in`, `https://staging.tanthavi.in`
+6. **CORS** (plugin: `cors`): Origins whitelist: `https://sutra.in`, `https://www.sutra.in`, `https://staging.sutra.in`
 
 7. **Bot Detection** (plugin: `bot-detection`): Block known scraper user agents
 
@@ -250,17 +250,17 @@ All secrets stored in AWS Secrets Manager, never in environment files or code:
 
 | Secret Name | Contents |
 |---|---|
-| `tanthavi/{env}/database/postgres` | `host, port, username, password, database` |
-| `tanthavi/{env}/database/mongo` | `connection_string` |
-| `tanthavi/{env}/cache/redis` | `host, port, auth_token` |
-| `tanthavi/{env}/payments/razorpay` | `key_id, key_secret, webhook_secret` |
-| `tanthavi/{env}/messaging/msg91` | `auth_key, sender_id, otp_template_id` |
-| `tanthavi/{env}/email/resend` | `api_key` |
-| `tanthavi/{env}/storage/aws` | `s3_bucket_names, cloudfront_domains` |
-| `tanthavi/{env}/auth/jwt` | `private_key (RSA-256), public_key` |
-| `tanthavi/{env}/logistics/shiprocket` | `email, password` |
-| `tanthavi/{env}/ai/google-vision` | `service_account_json` |
-| `tanthavi/{env}/kyc/surepass` | `api_token` |
+| `sutra/{env}/database/postgres` | `host, port, username, password, database` |
+| `sutra/{env}/database/mongo` | `connection_string` |
+| `sutra/{env}/cache/redis` | `host, port, auth_token` |
+| `sutra/{env}/payments/razorpay` | `key_id, key_secret, webhook_secret` |
+| `sutra/{env}/messaging/msg91` | `auth_key, sender_id, otp_template_id` |
+| `sutra/{env}/email/resend` | `api_key` |
+| `sutra/{env}/storage/aws` | `s3_bucket_names, cloudfront_domains` |
+| `sutra/{env}/auth/jwt` | `private_key (RSA-256), public_key` |
+| `sutra/{env}/logistics/shiprocket` | `email, password` |
+| `sutra/{env}/ai/google-vision` | `service_account_json` |
+| `sutra/{env}/kyc/surepass` | `api_token` |
 
 ---
 

@@ -9,7 +9,7 @@ export default function Home() {
         <div className="container">
           <div className={styles.navContent}>
             <div className={styles.logo}>
-              <span className={styles.logoIcon}>✦</span> Tanthavi
+              <span className={styles.logoIcon}>✦</span> Sutra
             </div>
             <div className={styles.navLinks} style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
               <Link href="/explore" className="btn btn-secondary" style={{ background: 'transparent', border: 'none' }}>
@@ -41,7 +41,7 @@ export default function Home() {
             </h1>
             
             <p className="subtitle animate-fade-in delay-200" style={{ maxWidth: '600px', margin: '1.5rem auto' }}>
-              Eliminating middlemen. Ensuring authenticity. Tanthavi brings authentic, GI-certified handloom directly from the weaver&apos;s loom to your wardrobe or business.
+              Eliminating middlemen. Ensuring authenticity. Sutra brings authentic, GI-certified handloom directly from the weaver&apos;s loom to your wardrobe or business.
             </p>
             
             <div className={styles.actionGroup + " animate-fade-in delay-300"}>

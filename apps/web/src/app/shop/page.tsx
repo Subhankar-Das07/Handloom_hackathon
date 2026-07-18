@@ -78,7 +78,7 @@ export default function ShopPage() {
       {/* Navbar */}
       <nav className={styles.navbar + " glass-panel"}>
         <Link href="/" className={styles.logo}>
-          <span className={styles.logoIcon}>✦</span> Tanthavi
+          <span className={styles.logoIcon}>✦</span> Sutra
         </Link>
         
         <div className={styles.searchBar}>

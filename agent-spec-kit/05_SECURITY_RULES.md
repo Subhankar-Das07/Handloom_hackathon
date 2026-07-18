@@ -1,5 +1,5 @@
 # 05 — Security Rules
-# Tanthavi Handloom Marketplace — Authoritative Security Reference
+# Sutra Handloom Marketplace — Authoritative Security Reference
 
 > **Version:** 1.0.0 | **Classification:** Internal — Engineering & AI Agents
 > This document is the authoritative security specification. Every feature touching authentication, data handling, payments, or user input MUST comply with these rules. Deviations require explicit super_admin sign-off and must be documented.
@@ -53,8 +53,8 @@ interface JwtPayload {
 // NestJS JwtService config
 const jwtConfig = {
   algorithm: 'RS256',
-  privateKey: await kms.getSigningKey('tanthavi-jwt-signing-key'),
-  publicKey: await kms.getPublicKey('tanthavi-jwt-signing-key'),
+  privateKey: await kms.getSigningKey('sutra-jwt-signing-key'),
+  publicKey: await kms.getPublicKey('sutra-jwt-signing-key'),
   expiresIn: '15m',
 };
 ```
@@ -71,7 +71,7 @@ const jwtConfig = {
 | Property | Value |
 |---|---|
 | Algorithm | `HS256` with 512-bit secret |
-| Secret storage | AWS Secrets Manager (`tanthavi/jwt/refresh-secret`) |
+| Secret storage | AWS Secrets Manager (`sutra/jwt/refresh-secret`) |
 | TTL | 30 days (sliding window — resets on each use) |
 | Storage (server) | SHA-256 hash stored in `user_sessions.refresh_token_hash` |
 | Transport | HTTP-only cookie: `refreshToken` |
@@ -366,7 +366,7 @@ function validatePan(pan: string): ValidationResult {
 
 ### 2.5 Aadhaar
 
-> **CRITICAL SECURITY RULE:** The full Aadhaar number MUST NEVER be stored in any database, log, or file on Tanthavi systems. Only the last 4 digits are stored (`aadhaar_last4 CHAR(4)`).
+> **CRITICAL SECURITY RULE:** The full Aadhaar number MUST NEVER be stored in any database, log, or file on Sutra systems. Only the last 4 digits are stored (`aadhaar_last4 CHAR(4)`).
 
 ```typescript
 const AADHAAR_REGEX = /^\d{12}$/;
@@ -546,7 +546,7 @@ async function validateMagicBytes(fileBuffer: Buffer, declaredMime: string): Pro
 | Max size | 10 MB per file |
 | Magic bytes | Required (see §3.1) |
 | Virus scan | ClamAV scan before S3 write |
-| S3 bucket | `tanthavi-kyc-private` (Block All Public Access) |
+| S3 bucket | `sutra-kyc-private` (Block All Public Access) |
 | S3 path | `kyc/{producerId}/{submissionId}/{documentType}/{uuid}.{ext}` |
 | Access | Presigned URL only (1-hour TTL), proxied through backend with auth check |
 | EXIF stripping | For images: strip EXIF via Sharp before storage |
@@ -582,7 +582,7 @@ async function processKycDocument(file: Express.Multer.File, context: KycContext
   // 7. Upload to S3
   const key = `kyc/${context.producerId}/${context.submissionId}/${context.documentType}/${nanoid()}.${getExtension(file.mimetype)}`;
   await s3.putObject({
-    Bucket: 'tanthavi-kyc-private',
+    Bucket: 'sutra-kyc-private',
     Key: key,
     Body: processedBuffer,
     ContentType: file.mimetype,
@@ -605,7 +605,7 @@ async function processKycDocument(file: Express.Multer.File, context: KycContext
 | Max per product | 10 images |
 | Processing | Strip EXIF → resize to max 2000×2000px (preserve AR) → generate 400px + 800px thumbnails → convert to WebP |
 | S3 path | `products/{producerId}/{productId}/images/{uuid}-{size}.webp` |
-| CDN | CloudFront (`cdn.tanthavi.com`) |
+| CDN | CloudFront (`cdn.sutra.com`) |
 | Cache-Control | `public, max-age=31536000, immutable` (images are versioned by UUID) |
 
 ---
@@ -664,7 +664,7 @@ export class PaymentController {
     @Headers('x-razorpay-signature') signature: string,
     @Body() payload: RazorpayWebhookPayload,
   ) {
-    const webhookSecret = await secretsManager.getSecret('tanthavi/razorpay/webhook-secret');
+    const webhookSecret = await secretsManager.getSecret('sutra/razorpay/webhook-secret');
     const isValid = await verifyRazorpayWebhook(rawBody, signature, webhookSecret);
 
     if (!isValid) {
@@ -744,7 +744,7 @@ async function verifyPaymentAmount(orderId: string, gatewayAmount: number): Prom
 **Rules:**
 - Server-side order amount is the source of truth; client-side amounts are NEVER trusted.
 - Razorpay order is created with the server-computed amount (in paise).
-- PCI DSS compliance: card numbers never touch Tanthavi servers; handled entirely by Razorpay tokenization.
+- PCI DSS compliance: card numbers never touch Sutra servers; handled entirely by Razorpay tokenization.
 - `gateway_signature` stored in `transactions` table for idempotency; cleared after 30 days via scheduled job.
 
 ---
@@ -1058,7 +1058,7 @@ async function executeDataErasure(userId: string, adminId?: string): Promise<voi
 
     // Step 2: Anonymize PII in users table
     await trx.users.update(userId, {
-      email: `deleted_${userId}@tanthavi.deleted`,
+      email: `deleted_${userId}@sutra.deleted`,
       phone: null,
       passwordHash: null,
       oauthProviderId: null,
@@ -1295,9 +1295,9 @@ Content-Security-Policy:
   script-src 'self' 'nonce-{RANDOM_NONCE}' https://www.google.com https://www.gstatic.com https://checkout.razorpay.com;
   style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
   font-src 'self' https://fonts.gstatic.com data:;
-  img-src 'self' data: blob: https://cdn.tanthavi.com https://*.cloudfront.net https://www.google.com;
-  media-src 'self' https://cdn.tanthavi.com https://*.cloudfront.net;
-  connect-src 'self' https://api.tanthavi.com https://analytics.tanthavi.com wss://api.tanthavi.com;
+  img-src 'self' data: blob: https://cdn.sutra.com https://*.cloudfront.net https://www.google.com;
+  media-src 'self' https://cdn.sutra.com https://*.cloudfront.net;
+  connect-src 'self' https://api.sutra.com https://analytics.sutra.com wss://api.sutra.com;
   frame-src https://api.razorpay.com;
   frame-ancestors 'none';
   base-uri 'self';
@@ -1320,10 +1320,10 @@ import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.int
 export const corsOptions: CorsOptions = {
   origin: (origin, callback) => {
     const allowedOrigins = [
-      'https://tanthavi.com',
-      'https://www.tanthavi.com',
-      'https://seller.tanthavi.com',
-      'https://admin.tanthavi.com',
+      'https://sutra.com',
+      'https://www.sutra.com',
+      'https://seller.sutra.com',
+      'https://admin.sutra.com',
     ];
 
     if (process.env.NODE_ENV === 'development') {
@@ -1437,7 +1437,7 @@ function computeGst(basePrice: number, gstRate: number, gstType: 'CGST_SGST' | '
 
 | Rule | Detail |
 |---|---|
-| Applicable to | All payments by Tanthavi (as e-commerce operator) to sellers |
+| Applicable to | All payments by Sutra (as e-commerce operator) to sellers |
 | Rate | 1% TDS on gross sales amount |
 | Exemption | Sellers with turnover < ₹5 lakh may file self-declaration (Form 194-O Cert) |
 | Deduction timing | At payout processing (before transferring to seller) |
@@ -1534,7 +1534,7 @@ interface GstInvoice {
 | Report | Who generates | Frequency | Available via |
 |---|---|---|---|
 | GSTR-1 (Outward Supplies) | Per-producer | Monthly | `GET /api/v1/producers/me/reports/gstr1?month=2024-01` |
-| GSTR-8 (E-commerce Operator) | Platform (Tanthavi) | Monthly | Admin export |
+| GSTR-8 (E-commerce Operator) | Platform (Sutra) | Monthly | Admin export |
 | TDS Certificate (Form 16A) | Platform | Quarterly | Emailed to producers |
 | Annual Sales Summary | Per-producer | Yearly | Seller dashboard download |
 

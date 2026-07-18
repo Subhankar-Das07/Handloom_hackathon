@@ -1,5 +1,5 @@
 # 06 — AI/ML Specification
-# Tanthavi Handloom Marketplace Platform
+# Sutra Handloom Marketplace Platform
 **Version:** 1.0.0  
 **Last Updated:** 2026-07-15  
 **Status:** Production Reference  
@@ -410,10 +410,10 @@ Seller uploads images via POST /api/v1/verify/submit
 FastAPI endpoint validates files (size, format, count)
     │
     ▼
-Images uploaded to S3: s3://tanthavi-kyc/pending/{seller_id}/{submission_id}/
+Images uploaded to S3: s3://sutra-kyc/pending/{seller_id}/{submission_id}/
     │
     ▼
-Verification job enqueued to AWS SQS queue: tanthavi-verification-jobs
+Verification job enqueued to AWS SQS queue: sutra-verification-jobs
     │
     ▼
 Verification worker (separate ECS task) polls SQS
@@ -426,7 +426,7 @@ Verification worker (separate ECS task) polls SQS
     └── Writes results to PostgreSQL: verification_submissions table
          │
          ▼
-    Publishes event to SNS: tanthavi-verification-complete
+    Publishes event to SNS: sutra-verification-complete
          │
          ▼
     Lambda function → sends notification email + in-app notification
@@ -1419,7 +1419,7 @@ class EligibilityMatcher:
             "matched_rules": matched_rules,
             "failed_rules": failed_rules,
             "official_url": scheme.official_url,
-            "disclaimer": "This result is informational only. Official eligibility is determined by the respective government agency. Tanthavi does not process loan or scheme applications."
+            "disclaimer": "This result is informational only. Official eligibility is determined by the respective government agency. Sutra does not process loan or scheme applications."
         }
     
     def match_all_schemes(
@@ -1505,7 +1505,7 @@ apps/ai/
 
 ```python
 """
-main.py — Tanthavi AI Service Entry Point
+main.py — Sutra AI Service Entry Point
 FastAPI application with CORS, authentication middleware, routers, and startup events.
 """
 
@@ -1540,7 +1540,7 @@ async def lifespan(app: FastAPI):
     Startup: load models into memory.
     Shutdown: clean up resources.
     """
-    logger.info("🚀 Starting Tanthavi AI Service...")
+    logger.info("🚀 Starting Sutra AI Service...")
     
     # Load verification model
     logger.info("Loading EfficientNet Verifier...")
@@ -1575,7 +1575,7 @@ async def lifespan(app: FastAPI):
     yield    # Application runs here
     
     # Shutdown cleanup
-    logger.info("🛑 Shutting down Tanthavi AI Service...")
+    logger.info("🛑 Shutting down Sutra AI Service...")
     app_state.clear()
 
 
@@ -1583,8 +1583,8 @@ async def lifespan(app: FastAPI):
 # FastAPI Application
 # ---------------------------------------------------------------------------
 app = FastAPI(
-    title="Tanthavi AI Service",
-    description="AI/ML backend for Tanthavi Handloom Marketplace — verification, moderation, recommendations, sentiment analysis.",
+    title="Sutra AI Service",
+    description="AI/ML backend for Sutra Handloom Marketplace — verification, moderation, recommendations, sentiment analysis.",
     version="1.0.0",
     docs_url="/docs" if settings.ENVIRONMENT != "production" else None,
     redoc_url="/redoc" if settings.ENVIRONMENT != "production" else None,
@@ -1694,7 +1694,7 @@ async def health_check():
 
 @app.get("/", tags=["Root"])
 async def root():
-    return {"service": "Tanthavi AI Service", "docs": "/docs"}
+    return {"service": "Sutra AI Service", "docs": "/docs"}
 
 
 # ---------------------------------------------------------------------------
@@ -2196,7 +2196,7 @@ def generate_rejection_reasons(
     if breakdown.is_powerloom_flagged:
         reasons.append(
             "One or more of your workspace photos appears to show a power loom machine. "
-            "Tanthavi Marketplace is exclusively for handloom artisans. "
+            "Sutra Marketplace is exclusively for handloom artisans. "
             "If this is an error, please re-upload clearer photos showing only your handloom setup."
         )
         return reasons
@@ -2368,7 +2368,7 @@ async def submit_verification(
     
     missing_keys = []
     for key in all_keys:
-        if not await s3_service.object_exists(bucket="tanthavi-kyc", key=key):
+        if not await s3_service.object_exists(bucket="sutra-kyc", key=key):
             missing_keys.append(key)
     
     if missing_keys:
@@ -2513,20 +2513,20 @@ async def process_verification_job(
         
         # Download and analyze workspace images
         for key in job["workspace_image_keys"]:
-            image_bytes = await s3_service.download_object(bucket="tanthavi-kyc", key=key)
+            image_bytes = await s3_service.download_object(bucket="sutra-kyc", key=key)
             probs = verifier.predict(image_bytes)    # Returns list[float] of length 8
             workspace_analyses.append(ImageAnalysis(image_key=key, probs=probs))
         
         # Download and analyze product images
         for key in job["product_image_keys"]:
-            image_bytes = await s3_service.download_object(bucket="tanthavi-kyc", key=key)
+            image_bytes = await s3_service.download_object(bucket="sutra-kyc", key=key)
             probs = verifier.predict(image_bytes)
             product_analyses.append(ImageAnalysis(image_key=key, probs=probs))
         
         # Download and analyze raw material image (if provided)
         if job.get("raw_material_image_key"):
             image_bytes = await s3_service.download_object(
-                bucket="tanthavi-kyc", key=job["raw_material_image_key"]
+                bucket="sutra-kyc", key=job["raw_material_image_key"]
             )
             probs = verifier.predict(image_bytes)
             raw_material_analyses.append(ImageAnalysis(image_key=job["raw_material_image_key"], probs=probs))

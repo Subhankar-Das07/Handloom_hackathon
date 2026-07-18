@@ -1,5 +1,5 @@
 # 09 — Third-Party Integration Guide
-# Tanthavi Handloom Marketplace Platform
+# Sutra Handloom Marketplace Platform
 **Version:** 1.0.0  
 **Last Updated:** 2026-07-15  
 **Status:** Production Reference  
@@ -75,7 +75,7 @@ async function createRazorpayOrder(
       order_id:   order.id,
       buyer_id:   buyer.id,
       buyer_name: buyer.full_name,
-      platform:   "tanthavi",
+      platform:   "sutra",
     },
     payment_capture: 1,    // Auto-capture payment immediately on success (1 = yes)
   };
@@ -117,9 +117,9 @@ async function initiatePayment(orderDetails: OrderDetails): Promise<void> {
     key:         key_id,        // From backend (never hardcode in frontend)
     amount:      amount,        // In paise
     currency:    currency,
-    name:        "Tanthavi Handloom Marketplace",
+    name:        "Sutra Handloom Marketplace",
     description: `Order #${orderDetails.id}`,
-    image:       "https://tanthavi.com/logo.png",
+    image:       "https://sutra.com/logo.png",
     order_id:    razorpay_order_id,
     handler: async function (response: RazorpayPaymentResponse) {
       // Payment success handler — ALWAYS verify on backend before showing success UI
@@ -127,7 +127,7 @@ async function initiatePayment(orderDetails: OrderDetails): Promise<void> {
         razorpay_payment_id:   response.razorpay_payment_id,
         razorpay_order_id:     response.razorpay_order_id,
         razorpay_signature:    response.razorpay_signature,
-        tanthavi_order_id:     orderDetails.id,
+        sutra_order_id:     orderDetails.id,
       });
 
       if (verificationResult.verified) {
@@ -142,10 +142,10 @@ async function initiatePayment(orderDetails: OrderDetails): Promise<void> {
       contact: currentUser.phone,
     },
     notes: {
-      address: "Tanthavi Marketplace – Handloom India",
+      address: "Sutra Marketplace – Handloom India",
     },
     theme: {
-      color: "#7C3AED",    // Tanthavi purple brand color
+      color: "#7C3AED",    // Sutra purple brand color
     },
     modal: {
       ondismiss: function () {
@@ -181,7 +181,7 @@ async function verifyPaymentSignature(
   razorpay_order_id: string,
   razorpay_payment_id: string,
   razorpay_signature: string,
-  tanthavi_order_id: string
+  sutra_order_id: string
 ): Promise<{ verified: boolean }> {
   
   // Razorpay signature = HMAC-SHA256(order_id + "|" + payment_id, key_secret)
@@ -197,19 +197,19 @@ async function verifyPaymentSignature(
 
   if (!isValid) {
     logger.error(
-      `Payment signature verification failed for order ${tanthavi_order_id}. ` +
+      `Payment signature verification failed for order ${sutra_order_id}. ` +
       `Possible tampering or replay attack.`
     );
     await auditLogService.log({
       event: "PAYMENT_SIGNATURE_INVALID",
-      order_id: tanthavi_order_id,
+      order_id: sutra_order_id,
       razorpay_payment_id,
     });
     return { verified: false };
   }
 
   // Signature valid: transition order status
-  await orderService.transitionStatus(tanthavi_order_id, "PAYMENT_CONFIRMED", "SYSTEM", {
+  await orderService.transitionStatus(sutra_order_id, "PAYMENT_CONFIRMED", "SYSTEM", {
     razorpay_payment_id,
     razorpay_order_id,
   });
@@ -223,7 +223,7 @@ async function verifyPaymentSignature(
 ### 1.3 Webhook Events Handled
 
 Configure webhook URL in Razorpay Dashboard → Settings → Webhooks:
-- URL: `https://api.tanthavi.com/webhooks/razorpay`
+- URL: `https://api.sutra.com/webhooks/razorpay`
 - Events to subscribe: `payment.captured`, `payment.failed`, `refund.processed`, `order.paid`
 
 ```typescript
@@ -354,7 +354,7 @@ async function initiateSellerPayout(
     notes: {
       payout_id,
       seller_id:  seller.id,
-      description: `Weekly payout — Tanthavi Marketplace`,
+      description: `Weekly payout — Sutra Marketplace`,
     },
     on_hold: 0,    // 0 = immediate transfer; 1 = held until manually released
   });
@@ -420,7 +420,7 @@ Register the following DLT-approved template on MSG91 Dashboard:
 **Template Name:** `TANTHAVI_OTP`  
 **Template Content (exact text for TRAI DLT registration):**
 ```
-Your OTP for Tanthavi Marketplace is ##OTP##. Valid for 10 minutes. Do not share this OTP with anyone. - TNTHVI
+Your OTP for Sutra Marketplace is ##OTP##. Valid for 10 minutes. Do not share this OTP with anyone. - TNTHVI
 ```
 
 The `##OTP##` variable is replaced by MSG91 automatically.
@@ -518,7 +518,7 @@ All transactional SMS must use pre-approved DLT templates.
 **Order Confirmed:**
 ```
 Dear {name}, your order #{order_id} for {product_name} has been confirmed. 
-Expected delivery: {expected_date}. Track at: tanthavi.com/orders/{order_id} - TNTHVI
+Expected delivery: {expected_date}. Track at: sutra.com/orders/{order_id} - TNTHVI
 ```
 
 **Order Shipped:**
@@ -530,7 +530,7 @@ AWB: {awb_number}. Track: {tracking_url} - TNTHVI
 **Order Delivered:**
 ```
 Your order #{order_id} has been delivered. 
-Loved it? Leave a review: tanthavi.com/orders/{order_id}/review - TNTHVI
+Loved it? Leave a review: sutra.com/orders/{order_id}/review - TNTHVI
 ```
 
 ```typescript
@@ -572,9 +572,9 @@ async function sendTransactionalSMS(
 
 ```bash
 RESEND_API_KEY=re_XXXXXXXXXXXXXXXXXXXX
-EMAIL_FROM_NAME="Tanthavi Marketplace"
-EMAIL_FROM_ADDRESS="noreply@mail.tanthavi.com"
-EMAIL_REPLY_TO="support@tanthavi.com"
+EMAIL_FROM_NAME="Sutra Marketplace"
+EMAIL_FROM_ADDRESS="noreply@mail.sutra.com"
+EMAIL_REPLY_TO="support@sutra.com"
 ```
 
 ```typescript
@@ -585,10 +585,10 @@ export const resendClient = new Resend(process.env.RESEND_API_KEY!);
 ```
 
 **DNS Setup Required (Resend Dashboard):**  
-Add SPF, DKIM, and DMARC records to `mail.tanthavi.com` subdomain:
+Add SPF, DKIM, and DMARC records to `mail.sutra.com` subdomain:
 - SPF: `v=spf1 include:_spf.resend.com ~all`
 - DKIM: Add CNAME records provided by Resend
-- DMARC: `v=DMARC1; p=quarantine; rua=mailto:dmarc@tanthavi.com`
+- DMARC: `v=DMARC1; p=quarantine; rua=mailto:dmarc@sutra.com`
 
 ### 3.2 Email Templates (All 12+)
 
@@ -649,7 +649,7 @@ export default function OrderConfirmedEmail({
           
           {/* Header */}
           <Section style={header}>
-            <Img src="https://tanthavi.com/logo-email.png" width="150" alt="Tanthavi" />
+            <Img src="https://sutra.com/logo-email.png" width="150" alt="Sutra" />
           </Section>
           
           {/* Hero */}
@@ -693,10 +693,10 @@ export default function OrderConfirmedEmail({
           <Section style={footer}>
             <Text style={footerText}>
               If you have any questions, reply to this email or contact{" "}
-              <Link href="mailto:support@tanthavi.com">support@tanthavi.com</Link>
+              <Link href="mailto:support@sutra.com">support@sutra.com</Link>
             </Text>
             <Text style={footerText}>
-              Tanthavi Marketplace — Connecting Artisans to the World
+              Sutra Marketplace — Connecting Artisans to the World
             </Text>
           </Section>
           
@@ -742,7 +742,7 @@ async function sendOrderConfirmedEmail(order: Order, buyer: User): Promise<void>
       product_image_url:      order.product.primary_image_url,
       order_amount:           order.total_amount,
       expected_delivery_date: formatDate(order.expected_delivery_date),
-      order_url:              `https://tanthavi.com/orders/${order.id}`,
+      order_url:              `https://sutra.com/orders/${order.id}`,
       seller_name:            order.seller.display_name,
     })
   );
@@ -817,7 +817,7 @@ async function createShipment(order: Order): Promise<ShipmentCreationResult> {
     order_id:        order.id,
     order_date:      order.created_at.toISOString().split("T")[0],   // YYYY-MM-DD
     pickup_location: "Primary",     // Warehouse name configured in Shiprocket dashboard
-    comment:         `Tanthavi Marketplace Order ${order.id}`,
+    comment:         `Sutra Marketplace Order ${order.id}`,
     
     billing_customer_name:    order.buyer.full_name,
     billing_last_name:        "",
@@ -927,7 +927,7 @@ async function trackShipment(awb: string): Promise<TrackingInfo> {
 ### 4.5 Webhook — `shipment_track_status_changed`
 
 Configure in Shiprocket Dashboard → Settings → Webhooks:
-- URL: `https://api.tanthavi.com/webhooks/shiprocket`
+- URL: `https://api.sutra.com/webhooks/shiprocket`
 
 ```typescript
 // webhooks/shiprocket.controller.ts
@@ -1020,7 +1020,7 @@ async function getShippingRates(
 ```bash
 GOOGLE_CLIENT_ID=XXXXXXXXXXXX-XXXXXXXXXXXX.apps.googleusercontent.com
 GOOGLE_CLIENT_SECRET=GOCSPX-XXXXXXXXXXXXXXXXXXXX
-GOOGLE_CALLBACK_URL=https://tanthavi.com/auth/google/callback
+GOOGLE_CALLBACK_URL=https://sutra.com/auth/google/callback
 ```
 
 **Google Cloud Console Configuration:**
@@ -1028,9 +1028,9 @@ GOOGLE_CALLBACK_URL=https://tanthavi.com/auth/google/callback
 2. Enable **Google+ API** and **People API**
 3. Create OAuth 2.0 credentials (Web Application type)
 4. Add authorized redirect URIs:
-   - `https://tanthavi.com/auth/google/callback` (production)
+   - `https://sutra.com/auth/google/callback` (production)
    - `http://localhost:3000/auth/google/callback` (development)
-5. Add authorized JavaScript origins: `https://tanthavi.com`
+5. Add authorized JavaScript origins: `https://sutra.com`
 
 ### 5.2 OAuth 2.0 Flow
 
@@ -1128,7 +1128,7 @@ async googleCallback(@Req() req: Request, @Res() res: Response): Promise<void> {
     maxAge:   30 * 24 * 60 * 60 * 1000,   // 30 days
   });
   
-  res.redirect("https://tanthavi.com/auth/complete");
+  res.redirect("https://sutra.com/auth/complete");
 }
 ```
 
@@ -1139,10 +1139,10 @@ async googleCallback(@Req() req: Request, @Res() res: Response): Promise<void> {
 ### 6.1 FCM Setup
 
 ```bash
-FIREBASE_PROJECT_ID=tanthavi-marketplace
+FIREBASE_PROJECT_ID=sutra-marketplace
 FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nXXXX\n-----END PRIVATE KEY-----\n"
-FIREBASE_CLIENT_EMAIL=firebase-adminsdk-XXXXX@tanthavi-marketplace.iam.gserviceaccount.com
-FIREBASE_STORAGE_BUCKET=tanthavi-marketplace.appspot.com
+FIREBASE_CLIENT_EMAIL=firebase-adminsdk-XXXXX@sutra-marketplace.iam.gserviceaccount.com
+FIREBASE_STORAGE_BUCKET=sutra-marketplace.appspot.com
 ```
 
 ```typescript
@@ -1169,9 +1169,9 @@ importScripts("https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging-com
 
 firebase.initializeApp({
   apiKey:            "XXXXXXXX",
-  authDomain:        "tanthavi-marketplace.firebaseapp.com",
-  projectId:         "tanthavi-marketplace",
-  storageBucket:     "tanthavi-marketplace.appspot.com",
+  authDomain:        "sutra-marketplace.firebaseapp.com",
+  projectId:         "sutra-marketplace",
+  storageBucket:     "sutra-marketplace.appspot.com",
   messagingSenderId: "XXXXXXXXXXXX",
   appId:             "1:XXXXXXXXXXXX:web:XXXXXXXXXXXX",
 });
@@ -1193,7 +1193,7 @@ messaging.onBackgroundMessage((payload) => {
 // Handle notification click
 self.addEventListener("notificationclick", (event) => {
   event.notification.close();
-  const url = event.notification.data?.click_action ?? "https://tanthavi.com";
+  const url = event.notification.data?.click_action ?? "https://sutra.com";
   event.waitUntil(clients.openWindow(url));
 });
 ```
@@ -1271,13 +1271,13 @@ async function sendPushNotification(
       imageUrl: notification.image_url,
     },
     data: {
-      click_action: notification.action_url ?? "https://tanthavi.com",
+      click_action: notification.action_url ?? "https://sutra.com",
       category:     notification.category,
       ...notification.extra_data,
     },
     webpush: {
       fcmOptions: { link: notification.action_url },
-      notification: { icon: "https://tanthavi.com/icons/icon-192x192.png" },
+      notification: { icon: "https://sutra.com/icons/icon-192x192.png" },
     },
     android: {
       notification: {
@@ -1328,10 +1328,10 @@ async function sendPushNotification(
 
 ### 7.1 Bucket Structure
 
-**Bucket Name Conventions:** `tanthavi-{environment}-{purpose}` (e.g., `tanthavi-prod-kyc`)
+**Bucket Name Conventions:** `sutra-{environment}-{purpose}` (e.g., `sutra-prod-kyc`)
 
 ```
-tanthavi-prod-kyc/              [Private — no public access]
+sutra-prod-kyc/              [Private — no public access]
   ├── pending/{seller_id}/{submission_id}/
   │     ├── workspace_1.jpg
   │     ├── product_1.jpg
@@ -1340,7 +1340,7 @@ tanthavi-prod-kyc/              [Private — no public access]
   │     └── {document_type}_{timestamp}.jpg
   └── aadhaar/ pan/ gst/        [Subfolder per document type]
 
-tanthavi-prod-media/            [Public via CloudFront]
+sutra-prod-media/            [Public via CloudFront]
   ├── product-images/
   │     └── {product_id}/
   │           ├── original/     → Raw upload (private, pre-signed URL generation)
@@ -1361,7 +1361,7 @@ tanthavi-prod-media/            [Public via CloudFront]
   └── avatars/
         └── {user_id}.webp
 
-tanthavi-prod-documents/        [Private — pre-signed URL only]
+sutra-prod-documents/        [Private — pre-signed URL only]
   ├── invoice-pdfs/
   │     └── {order_id}/invoice_{order_id}.pdf
   ├── payout-statements/
@@ -1374,9 +1374,9 @@ tanthavi-prod-documents/        [Private — pre-signed URL only]
 
 | Bucket | Public Access | Access Method |
 |--------|--------------|---------------|
-| `tanthavi-prod-kyc` | ❌ Blocked | IAM role only (backend + AI service) |
-| `tanthavi-prod-media` | ✅ via CloudFront | Public CDN URL (no S3 direct access) |
-| `tanthavi-prod-documents` | ❌ Blocked | Pre-signed URLs (15-min TTL) |
+| `sutra-prod-kyc` | ❌ Blocked | IAM role only (backend + AI service) |
+| `sutra-prod-media` | ✅ via CloudFront | Public CDN URL (no S3 direct access) |
+| `sutra-prod-documents` | ❌ Blocked | Pre-signed URLs (15-min TTL) |
 
 ### 7.2 Pre-Signed Upload URL Generation
 
@@ -1405,7 +1405,7 @@ async function generatePresignedUploadUrl(
     Key:           key,
     ContentType:   contentType,
     Metadata: {
-      "uploaded-by":  "tanthavi-api",
+      "uploaded-by":  "sutra-api",
       "upload-time":  new Date().toISOString(),
     },
     // Content-length restriction enforced via bucket policy, not here
@@ -1430,7 +1430,7 @@ async function getProductImageUploadUrl(
   const key = `product-images/${product_id}/original/${Date.now()}.${ext}`;
 
   const { upload_url } = await generatePresignedUploadUrl(
-    "tanthavi-prod-media",
+    "sutra-prod-media",
     key,
     content_type,
     10   // Max 10MB for product images
@@ -1459,15 +1459,15 @@ async function generatePresignedDownloadUrl(
 
 | Setting | Value |
 |---------|-------|
-| Origin | S3 bucket (`tanthavi-prod-media`) |
+| Origin | S3 bucket (`sutra-prod-media`) |
 | Origin Access Control | OAC (not legacy OAI) — restricts S3 to CloudFront only |
 | Viewer Protocol Policy | Redirect HTTP to HTTPS |
 | Allowed HTTP Methods | GET, HEAD |
 | TTL (Default) | 86400s (24h) |
 | TTL (Maximum) | 31536000s (1 year) for versioned assets |
 | Price Class | PriceClass_200 (North America + Europe + India — covers Indian users best) |
-| Custom Domain | media.tanthavi.com |
-| SSL | ACM certificate for `*.tanthavi.com` |
+| Custom Domain | media.sutra.com |
+| SSL | ACM certificate for `*.sutra.com` |
 | Compression | GZip + Brotli enabled |
 
 **Cache Behaviors:**
@@ -1482,14 +1482,14 @@ async function generatePresignedDownloadUrl(
 
 ### 7.4 CORS Configuration
 
-Apply to `tanthavi-prod-media` bucket (for pre-signed upload URLs):
+Apply to `sutra-prod-media` bucket (for pre-signed upload URLs):
 
 ```json
 [
   {
     "AllowedHeaders": ["Content-Type", "Content-Length", "x-amz-server-side-encryption"],
     "AllowedMethods": ["PUT", "POST"],
-    "AllowedOrigins": ["https://tanthavi.com", "https://seller.tanthavi.com", "http://localhost:3000"],
+    "AllowedOrigins": ["https://sutra.com", "https://seller.sutra.com", "http://localhost:3000"],
     "ExposeHeaders":  ["ETag"],
     "MaxAgeSeconds":  3000
   },
@@ -1699,7 +1699,7 @@ async function verifyGSTINFallback(gstin: string): Promise<{ valid: boolean; det
 
 ### 9.1 Index Configuration
 
-**Index Name:** `tanthavi_products_v1` (aliased as `tanthavi_products` for zero-downtime reindexing)
+**Index Name:** `sutra_products_v1` (aliased as `sutra_products` for zero-downtime reindexing)
 
 ```json
 {
@@ -1788,7 +1788,7 @@ async function verifyGSTINFallback(gstin: string): Promise<{ valid: boolean; det
 Products are indexed in Elasticsearch/OpenSearch via **event-driven updates**:
 
 ```
-PostgreSQL → Debezium CDC → Kafka topic (tanthavi.products.changes) → Indexer microservice → OpenSearch
+PostgreSQL → Debezium CDC → Kafka topic (sutra.products.changes) → Indexer microservice → OpenSearch
 ```
 
 ```typescript
@@ -1797,14 +1797,14 @@ async function handleProductChange(event: CDCEvent): Promise<void> {
   const { operation, after: product } = event;   // operation: INSERT | UPDATE | DELETE
 
   if (operation === "DELETE" || product.status === "DELETED") {
-    await opensearch.delete({ index: "tanthavi_products", id: product.id });
+    await opensearch.delete({ index: "sutra_products", id: product.id });
     return;
   }
 
   if (!["PUBLISHED"].includes(product.status)) {
     // Don't index unpublished products; delete if it was previously indexed
     try {
-      await opensearch.delete({ index: "tanthavi_products", id: product.id });
+      await opensearch.delete({ index: "sutra_products", id: product.id });
     } catch { /* ignore 404 */ }
     return;
   }
@@ -1845,7 +1845,7 @@ async function handleProductChange(event: CDCEvent): Promise<void> {
   };
 
   await opensearch.index({
-    index: "tanthavi_products",
+    index: "sutra_products",
     id:    product.id,
     document: doc,
   });
@@ -1961,7 +1961,7 @@ async function searchProducts(params: SearchParams): Promise<SearchResult> {
   }
 
   const esQuery = {
-    index: "tanthavi_products",
+    index: "sutra_products",
     from,
     size: page_size,
     query: {

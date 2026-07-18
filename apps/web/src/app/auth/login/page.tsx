@@ -65,7 +65,7 @@ export default function LoginPage() {
       <div className={styles.authCard + " glass-panel animate-fade-in"}>
         <div className={styles.header}>
           <Link href="/" className={styles.logo}>
-            <span className={styles.logoIcon}>✦</span> Tanthavi
+            <span className={styles.logoIcon}>✦</span> Sutra
           </Link>
           <h1 className="h2" style={{ marginTop: '1rem', marginBottom: '0.5rem' }}>Welcome Back</h1>
           <p className="subtitle" style={{ fontSize: '1rem' }}>Enter your credentials to access your account</p>

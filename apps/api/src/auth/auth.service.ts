@@ -28,7 +28,7 @@ export class AuthService {
       email: data.email,
       phone: data.phone,
       password_hash: hashedPassword,
-      role: data.email === 'admin@tanthavi.com' ? UserRole.ADMIN : (data.role || 'consumer'),
+      role: data.email === 'admin@sutra.com' ? UserRole.ADMIN : (data.role || 'consumer'),
     });
     const savedUser = await this.userRepository.save(user);
 

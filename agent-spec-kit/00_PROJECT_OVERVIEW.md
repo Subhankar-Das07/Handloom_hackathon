@@ -4,9 +4,9 @@
 
 ---
 
-## What Is Tanthavi?
+## What Is Sutra?
 
-Tanthavi is a **production-level multi-sided marketplace platform** for the Indian handloom industry.
+Sutra is a **production-level multi-sided marketplace platform** for the Indian handloom industry.
 
 It connects:
 - **Producers** (weavers, artisans, manufacturers, handloom cooperatives)
@@ -23,9 +23,9 @@ It is NOT a prototype or demo. It is built to:
 
 ## Platform Name
 
-**Tanthavi** (Sanskrit: *weaver*)
+**Sutra** (Sanskrit: *weaver*)
 
-- Domain concept: `tanthavi.in`
+- Domain concept: `sutra.in`
 - Brand tone: Trustworthy, empowering, culturally rooted, modern
 
 ---
@@ -96,7 +96,7 @@ The platform has ONE unified codebase but TWO distinct entry flows:
 ## Monorepo Structure
 
 ```
-tanthavi/
+sutra/
 ├── apps/
 │   ├── web/          ← Next.js 14 frontend (consumer + producer + admin UIs)
 │   ├── api/          ← NestJS backend (all microservices as modules initially)

@@ -56,7 +56,7 @@ export class InvoicesService {
         doc.fontSize(20).text('TAX INVOICE', { align: 'center' }).moveDown();
         
         // Platform details
-        doc.fontSize(10).text('Tanthavi Handloom Marketplace', 50, 90);
+        doc.fontSize(10).text('Sutra Handloom Marketplace', 50, 90);
         doc.text('GSTIN: 27AABCU9603R1ZX');
         doc.text('New Delhi, India').moveDown();
 

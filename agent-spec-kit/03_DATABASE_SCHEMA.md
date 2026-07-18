@@ -1,5 +1,5 @@
 # 03 — Database Schema
-# Tanthavi Handloom Marketplace — Authoritative Database Reference
+# Sutra Handloom Marketplace — Authoritative Database Reference
 
 > **Version:** 1.0.0 | **Engine:** PostgreSQL 15 (primary), MongoDB 6 (search/social/analytics), Redis 7 (cache/queue)
 > This document is the single source of truth for all data models. Any deviation from these schemas must be reflected here first.
@@ -253,7 +253,7 @@ CREATE TABLE users (
   CONSTRAINT users_login_attempts_range CHECK (login_attempts >= 0 AND login_attempts <= 20)
 );
 
-COMMENT ON TABLE users IS 'Core identity table. Every person interacting with Tanthavi has a row here.';
+COMMENT ON TABLE users IS 'Core identity table. Every person interacting with Sutra has a row here.';
 COMMENT ON COLUMN users.password_hash IS 'bcrypt(cost=12) hash. NULL when user authenticated only via OAuth.';
 COMMENT ON COLUMN users.lockout_until IS 'Set when login_attempts >= 5. User cannot login until this timestamp passes.';
 COMMENT ON COLUMN users.referral_code IS 'Unique code shared by user to invite others. Generated at registration.';
@@ -1493,7 +1493,7 @@ Elasticsearch sync document, mirrored in MongoDB as a write-through cache.
     "badges": ["gi_certified", "handloom_mark"]
   },
   "images": [
-    { "url": "https://cdn.tanthavi.com/...", "isPrimary": true }
+    { "url": "https://cdn.sutra.com/...", "isPrimary": true }
   ],
   "variants": [
     { "id": "uuid", "variantName": "Red - 5.5m", "stockQuantity": 3, "price": 12500 }
@@ -1513,8 +1513,8 @@ Elasticsearch sync document, mirrored in MongoDB as a write-through cache.
   "producerId": "uuid",
   "contentType": "reel",
   "caption": "Watch how this Pochampally Ikat saree is woven...",
-  "mediaUrls": ["https://cdn.tanthavi.com/social/..."],
-  "thumbnailUrl": "https://cdn.tanthavi.com/social/.../thumb.webp",
+  "mediaUrls": ["https://cdn.sutra.com/social/..."],
+  "thumbnailUrl": "https://cdn.sutra.com/social/.../thumb.webp",
   "taggedProductIds": ["uuid1", "uuid2"],
   "hashtags": ["handloom", "ikat", "pochampally", "artisan"],
   "location": "Pochampally, Telangana",

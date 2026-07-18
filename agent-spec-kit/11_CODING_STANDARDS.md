@@ -1,6 +1,6 @@
 # TANTHAVI — Agent Spec Kit
 ## File: 11_CODING_STANDARDS.md
-## Purpose: Coding conventions and standards. All code written for Tanthavi must comply.
+## Purpose: Coding conventions and standards. All code written for Sutra must comply.
 
 ---
 

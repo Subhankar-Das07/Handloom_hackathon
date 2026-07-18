@@ -16,7 +16,7 @@
 ### Goal: Working local dev environment + auth system live
 
 #### Setup Tasks
-- [ ] Initialize monorepo with Turborepo (`pnpm dlx create-turbo@latest tanthavi`)
+- [ ] Initialize monorepo with Turborepo (`pnpm dlx create-turbo@latest sutra`)
 - [ ] Add `apps/web` (Next.js 14), `apps/api` (NestJS), `apps/ai` (FastAPI), `packages/shared`
 - [ ] Configure Docker Compose: PostgreSQL 15, MongoDB 7, Redis 7, Elasticsearch 8, MailHog, MinIO
 - [ ] Set up ESLint + Prettier + Husky pre-commit hooks

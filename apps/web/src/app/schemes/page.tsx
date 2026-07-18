@@ -36,7 +36,7 @@ export default function PublicSchemesPage() {
   };
 
   const loadEligibility = () => {
-    const saved = localStorage.getItem('tanthavi_eligibility');
+    const saved = localStorage.getItem('sutra_eligibility');
     if (saved) {
       const data = JSON.parse(saved);
       setEligibilityData(data);
@@ -46,7 +46,7 @@ export default function PublicSchemesPage() {
 
   const handleSaveEligibility = (e: React.FormEvent) => {
     e.preventDefault();
-    localStorage.setItem('tanthavi_eligibility', JSON.stringify(eligibilityData));
+    localStorage.setItem('sutra_eligibility', JSON.stringify(eligibilityData));
     calculateEligibility(eligibilityData);
     setShowChecker(false);
   };
@@ -146,7 +146,7 @@ export default function PublicSchemesPage() {
       <div className={styles.schemesGrid}>
         {schemes.map(s => (
           <div key={s.id} className={`${styles.schemeCard} ${eligibleSchemeIds.includes(s.id) ? styles.eligible : ''}`}>
-            {eligibleSchemeIds.includes(s.id) && localStorage.getItem('tanthavi_eligibility') && (
+            {eligibleSchemeIds.includes(s.id) && localStorage.getItem('sutra_eligibility') && (
               <div className={styles.badge}><CheckCircle size={14} /> You're Eligible</div>
             )}
             <h3>{s.title}</h3>
